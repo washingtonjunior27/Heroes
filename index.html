@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+        <title>A Hero's Live</title>
+        <!-- BOOTSTRAP -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <main class="main">
+            <header class="navbar navbar-expand-lg navbar-dark"
+                id="header">
+                <div class="container">
+                    <a class="navbar-brand" href="index.html" id="logo">
+                        <img src="img/logo.png" alt="H-Hero">
+                    </a>
+                    <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <nav class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ms-auto" id="navbar-list">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page"
+                                    href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#history">History</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#heroes">Heroes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#wallpapers">Wallpapers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#decklist">Decklist</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#trinity">Trinity Crash</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="hero-section container d-flex flex-column justify-content-center align-items-start">
+                <h3 class="mb-4 fw-bold fs-5">Become the Next Legendary Hero</h3>
+                <h1 class="mb-4 fw-bold">Awaken Your Inner Hero</h1>
+                <p class="mb-4">In the world of Yu-Gi-Oh, heroes and monsters
+                    duel in epic
+                    battles. Explore our portfolio of creations inspired by this
+                    thrilling archetype and discover the magic of dueling.</p>
+                <button class="btn cta">Challenge Destiny</button>
+            </div>
+        </main>
+
+        <section class="container my-5 rounded d-flex justify-content-between flex-wrap-reverse" id="history">
+            <div class="texts">
+                <h2 class="fw-bold mb-4">HISTORY</h2>
+                <p>"HERO” is an archetype introduced in Yu-Gi-Oh! GX that
+                    includes six archetypes and series. In the anime, Jaden Yuki
+                    uses "Elemental HERO" and "Neo-Spacian" monsters, Aster
+                    Phoenix uses "Destiny HERO" monsters (but previously also
+                    used "Elemental HERO"), and Jaden as the Supreme King uses
+                    "Elemental HERO" and "Evil HERO" monsters. In the manga,
+                    Jaden uses "Elemental HERO" and "Masked HERO" monsters while
+                    Aster uses "Vision HERO" monsters. "Xtra HERO" monsters are
+                    the only ones to not appear in either the anime or the
+                    manga.</p>
+            </div>
+            <div class="flame-wingman">
+                <img src="img/flame-wingman.webp" alt="flame-wingman">
+            </div>
+        </section>
+
+        <section id="heroes" class="container d-flex align-items-center justify-content-between my-4">
+            
+        </section>
+
+        <section id="wallpapers" class="my-4">
+            <h2 class="fw-bold mb-4 text-center mt-5">WALLPAPERS</h2>
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                </div>
+                <div class="carousel-inner rounded container" id="carousel">
+                  <div class="carousel-item active">
+                    <img src="img/bg-1.png" class="d-block w-100" alt="bg-1">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/bg-2.jpg" class="d-block w-100" alt="bg-2">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/bg-3.jpg" class="d-block w-100" alt="bg-3">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/bg-4.webp" class="d-block w-100" alt="bg-4">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="img/bg-5.jpg" class="d-block w-100" alt="bg-5">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </section>
+
+        <section class="my-4 container" id="decklist">
+            <h2 class="fw-bold mb-4 text-center mt-5">DECKLIST</h2>
+            <div class="d-flex justify-content-center flex-wrap" id="main-deck">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div id="divModalImg">
+                            <img src="" alt="" id="modal-img">
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </section>
+
+        <section class="my-4 container" id="trinity">
+            <h2 class="fw-bold mb-4 text-center mt-5">VISION HERO TRINITY</h2>
+            <div id="trinity-container">
+                
+            </div>
+        </section>
+
+        <footer class="mt-4" id="footer">
+            <div class="container d-flex justify-content-between align-items-center" id="footer-container">
+                <a class="navbar-brand" href="index.html" id="logo">
+                    <img src="img/logo.png" alt="H-Hero">
+                </a>
+                <div class="footer-texts">
+                    <h3>Developed by - Washington Júnior</h3>
+                    <h3>Manaus - AM</h3>
+                    <h3>2023</h3>
+                </div>
+                <nav class="navbar">
+                    <ul class="navbar-nav" id="navbar-list">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page"
+                                href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#history">History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#heroes">Heroes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#wallpapers">Wallpapers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#decklist">Decklist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#trinity">Trinity Crash</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>

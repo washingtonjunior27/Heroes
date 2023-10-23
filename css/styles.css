@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root{
+    --black: #000000;
+    --white: #FFFFFF;
+    --blue: #007BFF;
+    --yellow: #FFD700;
+    --red: #FF0000;
+    --red-hover: #CC0000;
+    --transition: .4s;
+}
+body{
+    background-color: var(--blue);
+    color: var(--white);
+}
+html{
+    scroll-behavior: smooth;
+    scroll-padding-top: 15px;
+}
+
+/* HEADER */
+#header{
+    width: 100%;
+    background: linear-gradient(to right bottom,rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.2)) !important;
+    backdrop-filter: blur(1rem);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+#logo{
+    width: 75px;
+    height: 70px;
+}
+#logo img{
+    width: 100%;
+    height: 100%;
+}
+#navbar-list li a{
+    color: var(--yellow);
+}
+#navbar-list li a::after{
+    content: '';
+    width: 0;
+    display: block;
+    height: 2px;
+    background-color: var(--yellow);
+    transition: var(--transition);
+}
+#navbar-list li a:hover::after{
+    width: 100%;
+}
+/* MASK */
+.main{
+    position: relative;
+    background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('../img/bg-main.jpg');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+/* HERO */
+.hero-section{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+}
+.hero-section h1{
+    width: 340px;
+}
+.hero-section p{
+    width: 340px;
+    font-weight: 600;
+}
+.cta{
+    background-color: var(--red);
+    color: var(--white);
+    font-weight: 700;
+    transition: var(--transition);
+    width: 230px;
+}
+.cta:hover{
+    background-color: var(--red-hover);
+    color: var(--white);
+}
+/* HISTORY */
+#history{
+    background-color: var(--white);
+    color: var(--black);
+    padding: 1rem 2rem;
+}
+.texts p{
+    max-width: 540px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.flame-wingman{
+    position: relative;
+    width: 300px;
+}
+.flame-wingman img{
+    width: 100%;
+    margin-top: -170px;
+}
+/* HEROES */
+#heroes{
+    padding: 0;
+    gap: 12px;
+}
+.hero-img{
+    cursor: pointer;
+    height: 390px;
+    background-color: var(--white);
+    position: relative;
+    transition: var(--transition);
+    width: 25%;
+}
+.hero-img:hover{
+    width: 100%;
+}
+.hero-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* WALLPAPERS */
+#wallpapers{
+    padding: 0;
+}
+#carousel{
+    padding: 0;
+}
+.carousel-item{
+    height: 500px;
+}
+.carousel-item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* DECKLIST */
+#decklist{
+    width: 100%;
+}
+#main-deck{
+    width: 100%;
+    padding: 0;
+}
+.card-container{
+    padding: 0;
+    max-width: 85px;
+}
+.card-container img{
+    width: 100%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.card-container:hover{
+    scale: 1.2;
+}
+#divModalImg{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 400px;
+}
+#modal-img{
+    width: 100%;
+}
+
+/* TRINITY */
+#trinity-main, #trinity-crash, #trinity-duel{
+    background-color: var(--white);
+    padding: 2rem;
+}
+.trinity-img{
+    max-width: 350px;
+}
+#trinity-main img, #trinity-crash img, #trinity-duel img{
+    width: 100%;
+    height: 100%;
+}
+#trinity-main h3, #trinity-crash h3{
+    color: var(--black);
+    font-size: 1.2rem;
+}
+#trinity-crash h3{
+    text-shadow: 1px 2px 6px var(--red);
+}
+#versus{
+    max-width: 150px;
+}
+#duel{
+    gap: 12px;
+}
+
+/* FOOTER */
+#footer{
+    background-color: var(--yellow);
+    color: var(--black);
+    text-align: center;
+    padding: 1rem 0;
+}
+#footer h3{
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+#footer .navbar ul li a{
+    color: var(--black);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+#footer .navbar ul li a::after{
+    background-color: var(--blue);
+}
+
+/* MEDIA QUERYS */
+@media(max-width: 992px){
+    #history{
+        width: 90%;
+        justify-content: center !important;
+        text-align: center;
+    }
+    #heroes{
+        width: 90%;
+    }
+    .hero-img{
+        height: 300px;
+    }
+    .carousel-item{
+        height: 300px;
+    }
+    .card-container{
+        max-width: 55px;
+    }
+}
+
+@media(max-width: 769px){
+    #duel, #footer-container{
+        flex-direction: column;
+    }
+    #footer-container{
+        gap: 1.5rem;
+    }
+    #footer-container .navbar{
+        padding: 0;
+    }
+}
+
+@media(max-width: 580px){
+    .hero-section{
+        text-align: center;
+        align-items: center !important;
+    }
+    .texts p{
+        font-size: 12px;
+    }
+    .hero-img{
+        height: 150px;
+    }
+    #carousel{
+        width: 90%;
+    }
+    .card-container{
+        max-width: 45px;
+    }
+    #history{
+        padding: .5rem 1rem;
+    }
+}
+@media(max-width: 350px){
+    .hero-section h1{
+        width: 90%;
+    }
+    .hero-section p{
+        width: 90%;
+    }
+    .cta{
+        width: 90%;
+    }
+    .hero-img{
+        height: 100px;
+    }
+    .carousel-item{
+        height: 200px;
+    }
+    .card-container{
+        max-width: 30px;
+    }
+}
