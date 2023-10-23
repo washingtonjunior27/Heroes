@@ -344,19 +344,22 @@ const challengeFunc = async() => {
 }
 
 // FINAL CHALLENGE SECTION - TRINITY CRASH
-const trinityCrash = () => {
-    document.getElementById('trinity-container').innerHTML = "";
+const trinityCrash = async () => {
+    const mainChallengers = await filterChallengers();
 
+    document.getElementById('trinity-container').innerHTML = "";
+    
     const newDiv = document.createElement('div');
-    newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between')
-    newDiv.id = "trinity-crash"
+    newDiv.id = 'trinity-crash';
+    newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
 
     newDiv.innerHTML = `<div class="trinity-img">
-                            <img class="mb-4" src="img/trinity-crash.jpg" alt="Vision Hero Trinity">
+                            <img class="mb-4" src="${mainChallengers[0].card_images[0].image_url_cropped}" alt="Vision Hero Trinity">
                         </div>
-                        <h3 class="mb-4 fw-bold text-center">TRINITY CRASH</h3>
-                        <button class="btn cta" id="restart">New Challenge</button>`
-    document.getElementById('trinity-container').appendChild(newDiv);
+                        <h3 class="mb-4 fw-bold text-center">Trinity Crash</h3>
+                        <button class="btn cta" id="restart">New Challenge</button>`;
+
+    document.getElementById('trinity-container').appendChild(newDiv)
 }
 
 // MODAL SHOWS CARDS BY DECKLIST
@@ -378,7 +381,7 @@ document.getElementById('trinity').addEventListener('click', (e) => {
         trinityCrash()
     }
     if(e.target.id == "restart"){
-        startChallengers();
+        challengeFunc();
     }
 })
 

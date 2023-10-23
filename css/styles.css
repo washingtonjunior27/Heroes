@@ -28,8 +28,8 @@ html{
 /* HEADER */
 #header{
     width: 100%;
-    background: linear-gradient(to right bottom,rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.2)) !important;
-    backdrop-filter: blur(1rem);
+    background: rgba(255, 255, 255, 0.11);
+    backdrop-filter: blur(10px);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
     z-index: 1000;
 }
