@@ -187,7 +187,7 @@ html{
     width: 100%;
     height: 100%;
 }
-#trinity-main h3, #trinity-crash h3{
+#trinity-main h3, #trinity-crash h3, #duel h3{
     color: var(--black);
     font-size: 1.2rem;
 }
@@ -199,6 +199,9 @@ html{
 }
 #duel{
     gap: 12px;
+}
+#trinity-container{
+    position: relative;
 }
 
 /* FOOTER */

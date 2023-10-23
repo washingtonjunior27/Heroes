@@ -294,8 +294,9 @@ const createCards = async () => {
 
 // CREATE CHALLENGER SECTION WITH API - TRINITY
 const startChallengers = async () => {
-    document.getElementById('trinity-container').innerHTML = "";
     const mainChallengers = await filterChallengers();
+
+    document.getElementById('trinity-container').innerHTML = "";
     
     const newDiv = document.createElement('div');
     newDiv.id = 'trinity-main';
@@ -312,9 +313,9 @@ const startChallengers = async () => {
 
 // 2ND STAGE OFF CHALLENGE SECTION WITH API - TRINITY VS RANDOM CHALLENGER FROM JSON FILTER
 const challengeFunc = async() => {
-    document.getElementById('trinity-container').innerHTML = ""
-
     const getChallengers = await filterChallengers();
+
+    document.getElementById('trinity-container').innerHTML = ""
     let randomChallenge = 0
 
     while(randomChallenge == 0){
@@ -328,11 +329,13 @@ const challengeFunc = async() => {
     newDiv.innerHTML = `<div id="duel" class="d-flex align-items-center container justify-content-evenly">
                             <div class="trinity-img text-center">
                                 <img class="mb-4" src="${getChallengers[0].card_images[0].image_url_cropped}" alt="${getChallengers[0].name}">
+                                <h3 class="mb-4 fw-bold text-center">${getChallengers[0].name}</h3>
                                 <button class="btn cta" id="aposta1">Vote</button>
                             </div>
                             <img src="img/vs.png" alt="" id="versus">
                             <div class="trinity-img text-center">
                                 <img class="mb-4" src="${getChallengers[randomChallenge].card_images[0].image_url_cropped}" alt="${getChallengers[randomChallenge].name}">
+                                <h3 class="mb-4 fw-bold text-center">${getChallengers[randomChallenge].name}</h3>
                                 <button class="btn cta" id="aposta2">Vote</button>
                             </div>
                         </div>`;
@@ -343,7 +346,7 @@ const challengeFunc = async() => {
 // FINAL CHALLENGE SECTION - TRINITY CRASH
 const trinityCrash = () => {
     document.getElementById('trinity-container').innerHTML = "";
-    
+
     const newDiv = document.createElement('div');
     newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between')
     newDiv.id = "trinity-crash"
