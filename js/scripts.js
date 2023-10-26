@@ -1,5 +1,9 @@
 const decklist = [
     {
+        nome: 'elemental hero neos', 
+        qtd: 1
+    },
+    {
         nome: 'destiny hero - dark angel', 
         qtd: 1
     },
@@ -13,7 +17,7 @@ const decklist = [
     },
     {
         nome: 'ash blossom & joyous spring',
-        qtd: 3
+        qtd: 2
     },
     {
         nome: 'destiny hero - denier',
@@ -29,10 +33,14 @@ const decklist = [
     },
     {
         nome: 'elemental hero shadow mist',
-        qtd: 2
+        qtd: 1
     },
     {
         nome: 'elemental hero liquid soldier',
+        qtd: 1
+    },
+    {
+        nome: 'elemental hero blazeman',
         qtd: 1
     },
     {
@@ -42,10 +50,6 @@ const decklist = [
     {
         nome: 'destiny hero - malicious',
         qtd: 2
-    },
-    {
-        nome: 'elemental hero honest neos',
-        qtd: 1
     },
     {
         nome: 'destiny hero - plasma',
@@ -77,7 +81,7 @@ const decklist = [
     },
     {
         nome: 'book of eclipse',
-        qtd: 3
+        qtd: 2
     },
     {
         nome: 'mask change',
@@ -100,6 +104,14 @@ const decklist = [
         qtd: 3
     },
     {
+        nome: 'favorite contact',
+        qtd: 1
+    },
+    {
+        nome: 'elemental hero shining neos wingman',
+        qtd: 1
+    },
+    {
         nome: 'masked hero dark law',
         qtd: 2
     },
@@ -120,14 +132,6 @@ const decklist = [
         qtd: 1
     },
     {
-        nome: 'vision hero trinity',
-        qtd: 1
-    },
-    {
-        nome: 'elemental hero escuridao',
-        qtd: 1
-    },
-    {
         nome: 'destiny hero - destroyer phoenix enforcer',
         qtd: 1
     },
@@ -140,15 +144,15 @@ const decklist = [
         qtd: 1
     },
     {
-        nome: 'xtra hero cross crusader',
+        nome: 'xtra hero infernal devicer',
         qtd: 1
+    },
+    {
+        nome: 'xtra hero cross crusader',
+        qtd: 2
     },
     {
         nome: 'xtra hero wonder driver',
-        qtd: 1
-    },
-    {
-        nome: 'predaplant verte anaconda',
         qtd: 1
     },
     {
@@ -190,6 +194,10 @@ const challengers = [
     }
 ]
 
+// VARIAVEIS GLOBAIS
+let mainDeck = []
+let mainChallengers = []
+
 // FUNCTIONS
 
 // SANITIZE
@@ -202,84 +210,72 @@ const getHeroApi = async() => {
     return data;
 }
 
-// FILTER HEROES FROM API
-const filterHeroes = async () => {
-    const heroes = []
-    const getData = await getHeroApi();
-    
-    getData.data.filter(element => {
-        if(element.name.toLowerCase().includes('hero')){
-            heroes.push(element);
-        }
-    });
-
-    return heroes;
-}
-
-// FILTER DECKLIST BASED ON DECKLIST JSON
-const filterDecklist = async () => {
-    const mainDeck = [];
+// INIT FUNCTION
+const init = async () => {
+    const deck = [];
+    const fighters = [];
     const getData = await getHeroApi();
 
+    // FILTER DECKLIST
     decklist.forEach(card => {
         getData.data.filter(element => {
             if(element.name.toLowerCase() == card.nome.toLowerCase()){
+                deck.push(element)
+            }
+        })
+    })
+
+    // FILTER CHALLENGERS
+    challengers.forEach(challenger => {
+        getData.data.filter(data => {
+            if(data.name.toLowerCase() == challenger.nome.toLowerCase()){
+                fighters.push(data)
+            }
+        })
+    })
+
+    mainDeck = [...deck];
+    mainChallengers = [...fighters];
+
+    createCards(mainDeck)
+    createDeckList(mainDeck)
+    startChallengers(mainChallengers);
+}
+
+// CREATE DECKLIST SECTION WITH API AND FILTER DECKLIST
+const createDeckList = mainDeck => {
+    const fragment = document.createDocumentFragment()
+
+    decklist.forEach(card => {
+        mainDeck.filter(element => {
+            if(element.name.toLowerCase() == card.nome.toLowerCase()){
                 for(let i = 0; i < card.qtd; i++){
-                    mainDeck.push(element)
+                    const newDiv = document.createElement('div');
+                    newDiv.setAttribute('class', 'card-container')
+                    const newImg = document.createElement('img');
+                    newImg.setAttribute('data-bs-toggle', 'modal');
+                    newImg.setAttribute('data-bs-target', '#exampleModal');
+                    newImg.setAttribute('class', 'card-decklist');
+                    newImg.setAttribute('src', sanitizeItems(element.card_images[0].image_url));
+                    newImg.setAttribute('alt', sanitizeItems(element.name));
+                    
+                    newDiv.append(newImg);
+                    fragment.append(newDiv)
                 }
             }
         })
     })
-
-    return mainDeck;
-}
-
-// FILTER CHALLENGERS BASED ON CHALLENGERS JSON
-const filterChallengers = async () => {
-    const mainChallengers = [];
-    const getData = await getHeroApi();
-
-    challengers.forEach(card => {
-        getData.data.filter(element => {
-            if(element.name.toLowerCase() == card.nome.toLowerCase()){
-                mainChallengers.push(element)
-            }
-        })
-    })
-    return mainChallengers;
-}
-
-// CREATE DECKLIST SECTION WITH API AND FILTER DECKLIST
-const createDeckList = async() => {
-    const mainDeck = await filterDecklist()
-    const fragment = document.createDocumentFragment()
-
-    mainDeck.forEach(card => {
-        const newDiv = document.createElement('div');
-        newDiv.setAttribute('class', 'card-container')
-
-        const newImg = document.createElement('img');
-        newImg.setAttribute('data-bs-toggle', 'modal');
-        newImg.setAttribute('data-bs-target', '#exampleModal');
-        newImg.setAttribute('class', 'card-decklist');
-        newImg.setAttribute('src', sanitizeItems(card.card_images[0].image_url));
-        newImg.setAttribute('alt', sanitizeItems(card.name));
-        
-        newDiv.append(newImg);
-        fragment.append(newDiv)
-    })
-
+    
     document.getElementById('main-deck').appendChild(fragment)
 }
 
 // CREATE HEROES SECTION WITH API (I DECIDED TO NOT CREATE A JSON HERE AND MAKE WITH IF ELSE)
-const createCards = async () => {
-    const heroes = await filterHeroes();
+const createCards = mainDeck => {
     const heroesCards = []
 
     const fragment = document.createDocumentFragment();
 
-    heroes.filter(hero => {
+    mainDeck.filter(hero => {
         if(hero.name.toLowerCase().includes("destroyer phoenix enforcer")){
             heroesCards.push(hero)
         }
@@ -292,7 +288,7 @@ const createCards = async () => {
         if(hero.name.toLowerCase().includes("dark law")){
             heroesCards.push(hero)
         }
-        if(hero.name.toLowerCase().includes("sunrise")){
+        if(hero.name.toLowerCase().includes("shining neos wingman")){
             heroesCards.push(hero)
         }
     })
@@ -314,9 +310,7 @@ const createCards = async () => {
 }
 
 // CREATE CHALLENGER SECTION WITH API - TRINITY
-const startChallengers = async () => {
-    const mainChallengers = await filterChallengers();
-
+const startChallengers = mainChallengers => {
     document.getElementById('trinity-container').innerHTML = "";
     
     const newDiv = document.createElement('div');
@@ -347,14 +341,12 @@ const startChallengers = async () => {
 }
 
 // 2ND STAGE OFF CHALLENGE SECTION WITH API - TRINITY VS RANDOM CHALLENGER FROM JSON FILTER
-const challengeFunc = async() => {
-    const getChallengers = await filterChallengers();
-
+const challengeFunc = mainChallengers => {
     document.getElementById('trinity-container').innerHTML = ""
     let randomChallenge = 0
 
     while(randomChallenge == 0){
-        randomChallenge = Math.floor(Math.random() * getChallengers.length);
+        randomChallenge = Math.floor(Math.random() * mainChallengers.length);
     }
     
     const newDiv = document.createElement('div');
@@ -378,21 +370,21 @@ const challengeFunc = async() => {
 
     const newImgChallenger1 = document.createElement('img');
     newImgChallenger1.setAttribute('class', 'mb-4')
-    newImgChallenger1.setAttribute('src', sanitizeItems(getChallengers[0].card_images[0].image_url_cropped))
-    newImgChallenger1.setAttribute('alt', sanitizeItems(getChallengers[0].name))
+    newImgChallenger1.setAttribute('src', sanitizeItems(mainChallengers[0].card_images[0].image_url_cropped))
+    newImgChallenger1.setAttribute('alt', sanitizeItems(mainChallengers[0].name))
     
     const newImgChallenger2 = document.createElement('img');
     newImgChallenger2.setAttribute('class', 'mb-4')
-    newImgChallenger2.setAttribute('src', sanitizeItems(getChallengers[randomChallenge].card_images[0].image_url_cropped))
-    newImgChallenger2.setAttribute('alt', sanitizeItems(getChallengers[randomChallenge].name))
+    newImgChallenger2.setAttribute('src', sanitizeItems(mainChallengers[randomChallenge].card_images[0].image_url_cropped))
+    newImgChallenger2.setAttribute('alt', sanitizeItems(mainChallengers[randomChallenge].name))
 
     const newH3Chall1 = document.createElement('h3');
     newH3Chall1.setAttribute('class', 'mb-4 fw-bold text-center');
-    newH3Chall1.textContent = sanitizeItems(getChallengers[0].name);
+    newH3Chall1.textContent = sanitizeItems(mainChallengers[0].name);
     
     const newH3Chall2 = document.createElement('h3');
     newH3Chall2.setAttribute('class', 'mb-4 fw-bold text-center');
-    newH3Chall2.textContent = sanitizeItems(getChallengers[randomChallenge].name);
+    newH3Chall2.textContent = sanitizeItems(mainChallengers[randomChallenge].name);
 
     const newButtonChall1 = document.createElement('button');
     newButtonChall1.setAttribute('class', 'btn cta');
@@ -413,9 +405,7 @@ const challengeFunc = async() => {
 }
 
 // FINAL CHALLENGE SECTION - TRINITY CRASH
-const trinityCrash = async () => {
-    const mainChallengers = await filterChallengers();
-
+const trinityCrash = mainChallengers => {
     document.getElementById('trinity-container').innerHTML = "";
     
     const newDiv = document.createElement('div');
@@ -455,20 +445,18 @@ document.getElementById('main-deck').addEventListener('click', (e) => {
 // TRINITY FUNCTIONS
 document.getElementById('trinity').addEventListener('click', (e) => {
     if(e.target.id == "challenge"){
-        challengeFunc();
+        challengeFunc(mainChallengers);
     }
     if(e.target.id == "aposta1"){
-        trinityCrash()
+        trinityCrash(mainChallengers)
     }
     if(e.target.id == "aposta2"){
-        trinityCrash()
+        trinityCrash(mainChallengers)
     }
     if(e.target.id == "restart"){
-        challengeFunc();
+        challengeFunc(mainChallengers);
     }
 })
 
-// CREATE CARDS, DECKLIST, CHALLENGERS SECTION
-createCards();
-createDeckList();
-startChallengers();
+// init
+init()
