@@ -192,6 +192,9 @@ const challengers = [
 
 // FUNCTIONS
 
+// SANITIZE
+const sanitizeItems = string => DOMPurify.sanitize(string);
+
 // API
 const getHeroApi = async() => {
     const response = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php');
@@ -249,20 +252,32 @@ const filterChallengers = async () => {
 // CREATE DECKLIST SECTION WITH API AND FILTER DECKLIST
 const createDeckList = async() => {
     const mainDeck = await filterDecklist()
+    const fragment = document.createDocumentFragment()
+
     mainDeck.forEach(card => {
         const newDiv = document.createElement('div');
-        newDiv.classList.add('card-container')
+        newDiv.setAttribute('class', 'card-container')
+
+        const newImg = document.createElement('img');
+        newImg.setAttribute('data-bs-toggle', 'modal');
+        newImg.setAttribute('data-bs-target', '#exampleModal');
+        newImg.setAttribute('class', 'card-decklist');
+        newImg.setAttribute('src', sanitizeItems(card.card_images[0].image_url));
+        newImg.setAttribute('alt', sanitizeItems(card.name));
         
-        newDiv.innerHTML = `<img data-bs-toggle="modal" data-bs-target="#exampleModal" class='card-decklist' src="${card.card_images[0].image_url}" alt='${card.name}' />`
-        
-        document.getElementById('main-deck').appendChild(newDiv)
+        newDiv.append(newImg);
+        fragment.append(newDiv)
     })
+
+    document.getElementById('main-deck').appendChild(fragment)
 }
 
 // CREATE HEROES SECTION WITH API (I DECIDED TO NOT CREATE A JSON HERE AND MAKE WITH IF ELSE)
 const createCards = async () => {
     const heroes = await filterHeroes();
     const heroesCards = []
+
+    const fragment = document.createDocumentFragment();
 
     heroes.filter(hero => {
         if(hero.name.toLowerCase().includes("destroyer phoenix enforcer")){
@@ -285,11 +300,17 @@ const createCards = async () => {
     heroesCards.forEach(hero => {
         const newDiv = document.createElement('div')
         newDiv.classList.add('hero-img', 'rounded');
-        
-        newDiv.innerHTML = `<img class="rounded" src="${hero.card_images[0].image_url_cropped}" alt="${hero.name}">`;
 
-        document.getElementById('heroes').appendChild(newDiv)
+        const newImg = document.createElement('img');
+        newImg.setAttribute('class', 'rounded');
+        newImg.setAttribute('src', sanitizeItems(hero.card_images[0].image_url_cropped));
+        newImg.setAttribute('alt', sanitizeItems(hero.name));
+        
+        newDiv.append(newImg);
+        fragment.append(newDiv)
     })
+
+    document.getElementById('heroes').appendChild(fragment);
 }
 
 // CREATE CHALLENGER SECTION WITH API - TRINITY
@@ -299,14 +320,28 @@ const startChallengers = async () => {
     document.getElementById('trinity-container').innerHTML = "";
     
     const newDiv = document.createElement('div');
-    newDiv.id = 'trinity-main';
-    newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
+    newDiv.setAttribute('id', 'trinity-main');
+    newDiv.setAttribute('class', 'rounded d-flex flex-column align-items-center justify-content-between');
+    
+    const newDivImg = document.createElement('div');
+    newDivImg.setAttribute('class', 'trinity-img');
 
-    newDiv.innerHTML = `<div class="trinity-img">
-                            <img class="mb-4" src="${mainChallengers[0].card_images[0].image_url_cropped}" alt="Vision Hero Trinity">
-                        </div>
-                        <h3 class="mb-4 fw-bold text-center">Draw an archetype to face Trinity</h3>
-                        <button class="btn cta" id="challenge">Challenge</button>`;
+    const newImg = document.createElement('img');
+    newImg.setAttribute('class', 'mb-4');
+    newImg.setAttribute('src', sanitizeItems(mainChallengers[0].card_images[0].image_url_cropped))
+    newImg.setAttribute('al', 'Vision Hero Trinity');
+
+    const newH3 = document.createElement('h3');
+    newH3.setAttribute('class', 'mb-4 fw-bold text-center');
+    newH3.textContent = 'Draw an archetype to face Trinity';
+
+    const newBtn = document.createElement('button');
+    newBtn.setAttribute('class', 'btn cta');
+    newBtn.setAttribute('id', 'challenge');
+    newBtn.textContent = "Challenge";
+
+    newDivImg.appendChild(newImg);
+    newDiv.append(newDivImg, newH3, newBtn);
 
     document.getElementById('trinity-container').appendChild(newDiv)
 }
@@ -323,22 +358,56 @@ const challengeFunc = async() => {
     }
     
     const newDiv = document.createElement('div');
-    newDiv.id = 'trinity-duel';
-    newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
+    newDiv.setAttribute('id', 'trinity-duel');
+    newDiv.setAttribute('class', 'rounded d-flex flex-column align-items-center justify-content-between');
 
-    newDiv.innerHTML = `<div id="duel" class="d-flex align-items-center container justify-content-evenly">
-                            <div class="trinity-img text-center">
-                                <img class="mb-4" src="${getChallengers[0].card_images[0].image_url_cropped}" alt="${getChallengers[0].name}">
-                                <h3 class="mb-4 fw-bold text-center">${getChallengers[0].name}</h3>
-                                <button class="btn cta" id="aposta1">Vote</button>
-                            </div>
-                            <img src="img/vs.png" alt="" id="versus">
-                            <div class="trinity-img text-center">
-                                <img class="mb-4" src="${getChallengers[randomChallenge].card_images[0].image_url_cropped}" alt="${getChallengers[randomChallenge].name}">
-                                <h3 class="mb-4 fw-bold text-center">${getChallengers[randomChallenge].name}</h3>
-                                <button class="btn cta" id="aposta2">Vote</button>
-                            </div>
-                        </div>`;
+    const newDivDuel = document.createElement('div');
+    newDivDuel.setAttribute('id', 'duel')
+    newDivDuel.setAttribute('class', 'd-flex align-items-center container justify-content-evenly')
+    
+    const newDivTrinity1 = document.createElement('div');
+    newDivTrinity1.setAttribute('class', 'trinity-img text-center')
+    
+    const newDivTrinity2 = document.createElement('div');
+    newDivTrinity2.setAttribute('class', 'trinity-img text-center')
+
+    const newImgVS = document.createElement('img');
+    newImgVS.setAttribute('src', 'img/vs.png');
+    newImgVS.setAttribute('id', 'versus');
+    newImgVS.setAttribute('alt', 'VS');
+
+    const newImgChallenger1 = document.createElement('img');
+    newImgChallenger1.setAttribute('class', 'mb-4')
+    newImgChallenger1.setAttribute('src', sanitizeItems(getChallengers[0].card_images[0].image_url_cropped))
+    newImgChallenger1.setAttribute('alt', sanitizeItems(getChallengers[0].name))
+    
+    const newImgChallenger2 = document.createElement('img');
+    newImgChallenger2.setAttribute('class', 'mb-4')
+    newImgChallenger2.setAttribute('src', sanitizeItems(getChallengers[randomChallenge].card_images[0].image_url_cropped))
+    newImgChallenger2.setAttribute('alt', sanitizeItems(getChallengers[randomChallenge].name))
+
+    const newH3Chall1 = document.createElement('h3');
+    newH3Chall1.setAttribute('class', 'mb-4 fw-bold text-center');
+    newH3Chall1.textContent = sanitizeItems(getChallengers[0].name);
+    
+    const newH3Chall2 = document.createElement('h3');
+    newH3Chall2.setAttribute('class', 'mb-4 fw-bold text-center');
+    newH3Chall2.textContent = sanitizeItems(getChallengers[randomChallenge].name);
+
+    const newButtonChall1 = document.createElement('button');
+    newButtonChall1.setAttribute('class', 'btn cta');
+    newButtonChall1.setAttribute('id', 'aposta1');
+    newButtonChall1.textContent = "Vote";
+    
+    const newButtonChall2 = document.createElement('button');
+    newButtonChall2.setAttribute('class', 'btn cta');
+    newButtonChall2.setAttribute('id', 'aposta2');
+    newButtonChall2.textContent = "Vote";
+
+    newDivTrinity1.append(newImgChallenger1, newH3Chall1, newButtonChall1);
+    newDivTrinity2.append(newImgChallenger2, newH3Chall2, newButtonChall2);
+    newDivDuel.append(newDivTrinity1, newImgVS, newDivTrinity2);
+    newDiv.append(newDivDuel);
 
     document.getElementById('trinity-container').appendChild(newDiv)
 }
@@ -350,14 +419,28 @@ const trinityCrash = async () => {
     document.getElementById('trinity-container').innerHTML = "";
     
     const newDiv = document.createElement('div');
-    newDiv.id = 'trinity-crash';
-    newDiv.classList.add('rounded', 'd-flex', 'flex-column', 'align-items-center', 'justify-content-between');
+    newDiv.setAttribute('id', 'trinity-crash');
+    newDiv.setAttribute('class', 'rounded d-flex flex-column align-items-center justify-content-between');
 
-    newDiv.innerHTML = `<div class="trinity-img">
-                            <img class="mb-4" src="${mainChallengers[0].card_images[0].image_url_cropped}" alt="Vision Hero Trinity">
-                        </div>
-                        <h3 class="mb-4 fw-bold text-center">Trinity Crash</h3>
-                        <button class="btn cta" id="restart">New Challenge</button>`;
+    const newDivImg = document.createElement('div');
+    newDivImg.setAttribute('class', 'trinity-img');
+
+    const newImg = document.createElement('img');
+    newImg.setAttribute('class', 'mb-4');
+    newImg.setAttribute('src', sanitizeItems(mainChallengers[0].card_images[0].image_url_cropped))
+    newImg.setAttribute('al', 'Vision Hero Trinity');
+
+    const newH3 = document.createElement('h3');
+    newH3.setAttribute('class', 'mb-4 fw-bold text-center');
+    newH3.textContent = 'Trinity Crash';
+
+    const newBtn = document.createElement('button');
+    newBtn.setAttribute('class', 'btn cta');
+    newBtn.setAttribute('id', 'restart');
+    newBtn.textContent = "New Challenge";
+
+    newDivImg.appendChild(newImg);
+    newDiv.append(newDivImg, newH3, newBtn);
 
     document.getElementById('trinity-container').appendChild(newDiv)
 }
