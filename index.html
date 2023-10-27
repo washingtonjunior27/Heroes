@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
+        <!-- API ERROR -->
+        <div id="error-api">
+            <h3 id="error-api-text"></h3>
+        </div>
+
+        <!-- LOADING -->
         <div id="spinner">
             <div id="spinner-img">
                 <img class="rounded" src="img/loading.gif" alt="Loading">
@@ -21,6 +27,10 @@
             </div>
             <h2 class="text-uppercase fw-bold">Loading...</h2>
         </div>
+
+        <!-- MAIN CONTENT -->
+
+        <!-- HEADER + HERO SECTION -->
         <main class="main">
             <header class="navbar navbar-expand-lg navbar-dark"
                 id="header">
@@ -54,7 +64,7 @@
                                 <a class="nav-link" href="#decklist">Decklist</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#trinity">Trinity Crash</a>
+                                <a class="nav-link" href="#trinity">Trinity</a>
                             </li>
                         </ul>
                     </nav>
@@ -72,6 +82,7 @@
             </div>
         </main>
 
+        <!-- HISTORY SECTION -->
         <section class="container my-5 rounded d-flex justify-content-between flex-wrap-reverse" id="history">
             <div class="texts">
                 <h2 class="fw-bold mb-4">HISTORY</h2>
@@ -91,10 +102,12 @@
             </div>
         </section>
 
+        <!-- HEROES SECTION -->
         <section id="heroes" class="container d-flex align-items-center justify-content-between my-4">
             
         </section>
 
+        <!-- WALLPAPERS SECTION -->
         <section id="wallpapers" class="my-4">
             <h2 class="fw-bold mb-4 text-center mt-5">WALLPAPERS</h2>
 
@@ -134,6 +147,7 @@
               </div>
         </section>
 
+        <!-- DECKLIST SECTION -->
         <section class="my-4 container" id="decklist">
             <h2 class="fw-bold mb-4 text-center mt-5">DECKLIST</h2>
             <div class="d-flex justify-content-center flex-wrap" id="main-deck">
@@ -147,6 +161,7 @@
             </div>
         </section>
 
+        <!-- TRINITY SECTION -->
         <section class="my-4 container" id="trinity">
             <h2 class="fw-bold mb-4 text-center mt-5">VISION HERO TRINITY</h2>
             <div id="trinity-container">
@@ -154,39 +169,12 @@
             </div>
         </section>
 
+        <!-- FOOTER -->
         <footer class="mt-4" id="footer">
-            <div class="container d-flex justify-content-between align-items-center" id="footer-container">
-                <a class="navbar-brand" href="index.html" id="logo">
-                    <img src="img/logo.png" alt="H-Hero">
-                </a>
-                <div class="footer-texts">
-                    <h3>Developed by - Washington Júnior</h3>
-                    <h3>Manaus - AM</h3>
-                    <h3>2023</h3>
-                </div>
-                <nav class="navbar">
-                    <ul class="navbar-nav" id="navbar-list">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page"
-                                href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#history">History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#heroes">Heroes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#wallpapers">Wallpapers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#decklist">Decklist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#trinity">Trinity Crash</a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="footer-texts">
+                <h3>Developed by - Washington Júnior</h3>
+                <h3>Manaus - AM</h3>
+                <h3>2023</h3>
             </div>
         </footer>
 

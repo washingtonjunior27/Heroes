@@ -10,7 +10,7 @@
 :root{
     --black: #000000;
     --white: #FFFFFF;
-    --blue: #007BFF;
+    --blue: #004999;
     --yellow: #FFD700;
     --red: #FF0000;
     --red-hover: #CC0000;
@@ -22,7 +22,24 @@ body{
 }
 html{
     scroll-behavior: smooth;
-    scroll-padding-top: 15px;
+    scroll-padding-top: 100px;
+}
+/* ERROR */
+#error-api{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--blue);
+    height: 100%;
+    width: 100%;
+    z-index: 15000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#error-api.error{
+    display: flex;
 }
 /* SPINNER - LOADING*/
 body.loading{
@@ -54,11 +71,24 @@ body.loading{
 
 /* HEADER */
 #header{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.11);
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    transition: var(--transition);
+}
+#header.active{
+    background-color: var(--blue);
+}
+#header.active #navbar-list li a{
+    color: var(--white);
+}
+#header.active #navbar-list li a::after{
+    background-color: var(--white);
 }
 #logo{
     width: 75px;
@@ -70,6 +100,8 @@ body.loading{
 }
 #navbar-list li a{
     color: var(--yellow);
+    text-transform: uppercase;
+    font-weight: 600;
 }
 #navbar-list li a::after{
     content: '';
@@ -233,23 +265,15 @@ body.loading{
 
 /* FOOTER */
 #footer{
-    background-color: var(--yellow);
-    color: var(--black);
+    background-color: var(--white);
     text-align: center;
     padding: 1rem 0;
 }
 #footer h3{
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-#footer .navbar ul li a{
     color: var(--black);
-    font-weight: 700;
     text-transform: uppercase;
-}
-#footer .navbar ul li a::after{
-    background-color: var(--blue);
+    font-weight: 600;
+    font-size: 1rem;
 }
 
 /* MEDIA QUERYS */
@@ -276,12 +300,6 @@ body.loading{
 @media(max-width: 769px){
     #duel, #footer-container{
         flex-direction: column;
-    }
-    #footer-container{
-        gap: 1.5rem;
-    }
-    #footer-container .navbar{
-        padding: 0;
     }
 }
 

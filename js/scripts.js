@@ -203,17 +203,26 @@ let mainChallengers = []
 // SANITIZE
 const sanitizeItems = string => DOMPurify.sanitize(string);
 
+// BODY OVERFLOW
+const bodyOverflowChange = () => document.querySelector('body').classList.toggle('loading')
+
 // LOADING
 const loadingSpinner = () => {
-    document.querySelector('body').classList.toggle('loading')
+    bodyOverflowChange();
     document.getElementById('spinner').classList.toggle('active');
 }
 
 // API
 const getHeroApi = async() => {
-    const response = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php');
-    const data = response.json();
-    return data;
+    try{
+        const response = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php');
+        const data = response.json();
+        return data;
+    }catch(error){
+        bodyOverflowChange();
+        document.getElementById('error-api').classList.toggle('error');
+        document.getElementById('error-api-text').textContent = error;
+    }
 }
 
 // INIT FUNCTION
@@ -464,3 +473,20 @@ document.getElementById('trinity').addEventListener('click', (e) => {
 
 // init
 init()
+
+// MENU COLOR ON SCROLL
+window.addEventListener('scroll', () => {
+    window.scrollY > 0 
+            ? document.querySelector('#header').classList.add('active') 
+            : document.querySelector('#header').classList.remove('active')
+})
+
+// CLOSE MENU MOBILE ON CLICK
+const menuToggle = document.getElementById('navbarNavDropdown')
+const bsCollapse = new bootstrap.Collapse(menuToggle)
+
+document.querySelectorAll('#navbar-list .nav-item .nav-link').forEach(item => {
+    item.addEventListener('click', () => {
+        bsCollapse.toggle()
+    })
+})
