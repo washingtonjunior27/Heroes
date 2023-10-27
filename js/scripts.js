@@ -132,6 +132,10 @@ const decklist = [
         qtd: 1
     },
     {
+        nome: 'vision hero trinity',
+        qtd: 1
+    },
+    {
         nome: 'destiny hero - destroyer phoenix enforcer',
         qtd: 1
     },
@@ -149,7 +153,7 @@ const decklist = [
     },
     {
         nome: 'xtra hero cross crusader',
-        qtd: 2
+        qtd: 1
     },
     {
         nome: 'xtra hero wonder driver',
@@ -172,25 +176,16 @@ const challengers = [
         nome: 'kashtira fenrir'
     },
     {
-        nome: 'gigantic spright'
-    },
-    {
         nome: 'blue-eyes white dragon'
     },
     {
         nome: 'Lady Labrynth of the Silver Castle'
     },
     {
-        nome: 'Bystial Magnamhut'
+        nome: 'Dark Magician'
     },
     {
         nome: 'Accesscode Talker'
-    },
-    {
-        nome: 'Borreload Savage Dragon'
-    },
-    {
-        nome: 'Baronne de Fleur'
     }
 ]
 
@@ -213,9 +208,9 @@ const loadingSpinner = () => {
 }
 
 // API
-const getHeroApi = async() => {
+const getElementalHeroApi = async(type, hero) => {
     try{
-        const response = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php');
+        const response = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?${type}=${hero}`);
         const data = response.json();
         return data;
     }catch(error){
@@ -225,34 +220,51 @@ const getHeroApi = async() => {
     }
 }
 
-// INIT FUNCTION
-const init = async () => {
+const filterCards = (list, getData) => {
     const deck = [];
-    const fighters = [];
-
-    loadingSpinner()
-
-    const getData = await getHeroApi();
-    // FILTER DECKLIST
-    decklist.forEach(card => {
+    
+    list.forEach(card => {
         getData.data.filter(element => {
             if(element.name.toLowerCase() == card.nome.toLowerCase()){
                 deck.push(element)
             }
-        })
+        }) 
     })
 
-    // FILTER CHALLENGERS
-    challengers.forEach(challenger => {
-        getData.data.filter(data => {
-            if(data.name.toLowerCase() == challenger.nome.toLowerCase()){
-                fighters.push(data)
-            }
-        })
-    })
+    return deck;
+}
 
-    mainDeck = [...deck];
-    mainChallengers = [...fighters];
+// INIT FUNCTION
+const init = async () => {
+    loadingSpinner()
+
+    const promiseDataEH = getElementalHeroApi('archetype', 'Elemental Hero');
+    const promiseDataDH = getElementalHeroApi('archetype', 'Destiny Hero');
+    const promiseDataVH = getElementalHeroApi('archetype', 'Vision Hero');
+    const promiseDataMH = getElementalHeroApi('archetype', 'Masked Hero');
+    const promiseStaples = getElementalHeroApi('staple', 'yes')
+    const promiseFighters = getElementalHeroApi('rarity', 'Prismatic Secret Rare')
+
+    const datas = await Promise.all([promiseDataEH, promiseDataDH, promiseDataVH, promiseDataMH, promiseStaples])
+    const getFighters = await promiseFighters;
+
+    // FILTER DECKLIST
+    
+    const elementalHeroes = filterCards(decklist, datas[0]);
+    const destinyHeroes = filterCards(decklist, datas[1]);    
+    const visionHeroes = filterCards(decklist, datas[2]);
+    const maskedHeroes = filterCards(decklist, datas[3]);
+    const staples = filterCards(decklist, datas[4]);
+    const fighters = filterCards(challengers, getFighters);
+    
+    let elementalHeroTrinity = []
+    visionHeroes.forEach(element => 
+        element.name.toLowerCase() == "vision hero trinity"
+        ? elementalHeroTrinity = element 
+        : '');
+
+    mainDeck = [...elementalHeroes, ...destinyHeroes, ...visionHeroes, ...maskedHeroes, ...staples];
+    mainChallengers = [elementalHeroTrinity, ...fighters];
 
     createCards(mainDeck)
     createDeckList(mainDeck)
@@ -483,10 +495,10 @@ window.addEventListener('scroll', () => {
 
 // CLOSE MENU MOBILE ON CLICK
 const menuToggle = document.getElementById('navbarNavDropdown')
-const bsCollapse = new bootstrap.Collapse(menuToggle)
 
 document.querySelectorAll('#navbar-list .nav-item .nav-link').forEach(item => {
     item.addEventListener('click', () => {
+        const bsCollapse = new bootstrap.Collapse(menuToggle)
         bsCollapse.toggle()
     })
 })
