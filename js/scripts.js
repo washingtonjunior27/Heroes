@@ -203,6 +203,12 @@ let mainChallengers = []
 // SANITIZE
 const sanitizeItems = string => DOMPurify.sanitize(string);
 
+// LOADING
+const loadingSpinner = () => {
+    document.querySelector('body').classList.toggle('loading')
+    document.getElementById('spinner').classList.toggle('active');
+}
+
 // API
 const getHeroApi = async() => {
     const response = await fetch('https://db.ygoprodeck.com/api/v7/cardinfo.php');
@@ -214,8 +220,10 @@ const getHeroApi = async() => {
 const init = async () => {
     const deck = [];
     const fighters = [];
-    const getData = await getHeroApi();
 
+    loadingSpinner()
+
+    const getData = await getHeroApi();
     // FILTER DECKLIST
     decklist.forEach(card => {
         getData.data.filter(element => {
@@ -240,6 +248,8 @@ const init = async () => {
     createCards(mainDeck)
     createDeckList(mainDeck)
     startChallengers(mainChallengers);
+
+    loadingSpinner()
 }
 
 // CREATE DECKLIST SECTION WITH API AND FILTER DECKLIST
@@ -444,17 +454,11 @@ document.getElementById('main-deck').addEventListener('click', (e) => {
 
 // TRINITY FUNCTIONS
 document.getElementById('trinity').addEventListener('click', (e) => {
-    if(e.target.id == "challenge"){
+    if(e.target.id == "challenge" || e.target.id == "restart"){
         challengeFunc(mainChallengers);
     }
-    if(e.target.id == "aposta1"){
+    if(e.target.id == "aposta1" || e.target.id == "aposta2"){
         trinityCrash(mainChallengers)
-    }
-    if(e.target.id == "aposta2"){
-        trinityCrash(mainChallengers)
-    }
-    if(e.target.id == "restart"){
-        challengeFunc(mainChallengers);
     }
 })
 

@@ -24,6 +24,33 @@ html{
     scroll-behavior: smooth;
     scroll-padding-top: 15px;
 }
+/* SPINNER - LOADING*/
+body.loading{
+    overflow: hidden;
+}
+#spinner{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blue);
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+#spinner.active{
+    display: flex;
+}
+#spinner-img{
+    max-width: 600px;
+}
+#spinner-img img{
+    width: 100%;
+}
 
 /* HEADER */
 #header{
@@ -277,6 +304,13 @@ html{
     }
     #history{
         padding: .5rem 1rem;
+    }
+    #spinner-img{
+        max-width: auto;
+        width: 90%;
+    }
+    #spinner-img img{
+        width: 100%;
     }
 }
 @media(max-width: 350px){
